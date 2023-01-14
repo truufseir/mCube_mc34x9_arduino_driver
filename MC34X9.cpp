@@ -421,7 +421,11 @@ uint8_t _readRegister8(bool bSpi, uint8_t chip_select, uint8_t reg)
     digitalWrite(chip_select, HIGH);
   } else { //Reads an 8-bit register with the SPI port.
     /** I2C read function */
-    Wire.requestFrom(chip_select, 1, reg, 1, true);
+    //Wire.requestFrom(chip_select, 1, reg, 1, true);
+	Wire.beginTransmission(chip_select);
+	Wire.write(reg);
+	Wire.endTransmission();
+	Wire.requestFrom(chip_select, 1);
     value = Wire.read();
   }
 
